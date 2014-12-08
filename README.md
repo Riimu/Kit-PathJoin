@@ -10,8 +10,7 @@ This library can also be used to normalize file system paths in addition to
 joining them, as passing a single argument will simple return that path in a
 normalized form.
 
-API documentation can be generated using Apigen or you can simply read it at:
-[http://kit.riimu.net/api/pathjoin/](http://kit.riimu.net/api/pathjoin/)
+API documentation can be found at: http://kit.riimu.net/api/pathjoin/
 
 [![Build Status](https://travis-ci.org/Riimu/Kit-PathJoin.svg)](https://travis-ci.org/Riimu/Kit-PathJoin)
 [![Coverage Status](https://img.shields.io/coveralls/Riimu/Kit-PathJoin.svg)](https://coveralls.io/r/Riimu/Kit-PathJoin?branch=master)
