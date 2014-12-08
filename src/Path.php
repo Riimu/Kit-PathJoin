@@ -39,7 +39,7 @@ class Path
 
     /**
      * Canonizes the path into separate parts regardless of directory separator.
-     * @param array $args Array of paths
+     * @param string[] $args Array of paths
      * @param boolean $absolute Will be set to true if the path is absolute
      * @return string[] Parts in the paths separated into a single array
      */
@@ -53,7 +53,7 @@ class Path
 
     /**
      * Normalizes that parent directory references and removes unnecessary ones.
-     * @param array $paths List of parts in the the path
+     * @param string[] $paths List of parts in the the path
      * @param boolean $absolute Whether the path is an absolute path or not
      * @return string[] Normalized list of paths
      * @throws \InvalidArgumentException If the path contains invalid colons

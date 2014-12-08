@@ -59,6 +59,11 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertPath(['', 'baz'], Path::join('/foo/bar', '..', '/../../', 'baz'));
     }
 
+    public function testWindowsAbsolutePaths()
+    {
+        $this->assertPath(['C:', 'baz'], Path::join('C:/foo/bar', '..', '/../../', 'baz'));
+    }
+
     private function assertPath(array $expected, $actual)
     {
         $this->assertSame(implode(DIRECTORY_SEPARATOR, $expected), $actual);
