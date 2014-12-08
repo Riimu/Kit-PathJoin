@@ -48,7 +48,7 @@ class Path
         $args = array_map('trim', $args);
         $paths = explode('/', str_replace('\\', '/', implode('/', $args)));
         $absolute = $args[0] !== '' && ($paths[0] === '' || substr($paths[0], -1) === ':');
-        return [$paths, $absolute];
+        return $paths;
     }
 
     /**
