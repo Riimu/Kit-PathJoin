@@ -64,9 +64,7 @@ class Path
         $paths = array_filter($paths, [__CLASS__, 'emptyPath']);
 
         foreach ($paths as $part) {
-            if (strpos($part, ':') !== false) {
-                throw new \InvalidArgumentException('Invalid path character ":"');
-            } elseif ($part === '..') {
+            if ($part === '..') {
                 self::ascend($part, $parts, $absolute);
             } else {
                 $parts[] = $part;
@@ -78,6 +76,10 @@ class Path
 
     private static function emptyPath($path)
     {
+        if (strpos($path, ':') !== false) {
+            throw new \InvalidArgumentException('Invalid path character ":"');
+        }
+
         return $path !== '' && $path !== '.';
     }
 
