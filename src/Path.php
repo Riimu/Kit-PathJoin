@@ -33,7 +33,7 @@ class Path
         $paths = self::canonize(is_array($path) ? $path : func_get_args(), $absolute);
         $parts = self::normalize($paths, $absolute);
         return $absolute && count($parts) === 1
-            ? $parts[0] . DIRECTORY_SEPARATOR
+            ? reset($parts) . DIRECTORY_SEPARATOR
             : implode(DIRECTORY_SEPARATOR, $parts);
     }
 
@@ -61,24 +61,29 @@ class Path
     private static function normalize(array $paths, $absolute)
     {
         $parts = $absolute ? [array_shift($paths)] : [];
+        $paths = array_filter($paths, function ($value) {
+            return $value !== '' && $value !== '.';
+        });
 
         foreach ($paths as $part) {
-            if ($part === '.' || $part === '') {
-                continue;
+            if (strpos($part, ':') !== false) {
+                throw new \InvalidArgumentException('Invalid path character ":"');
             } elseif ($part === '..') {
-                if (count($parts) === 1 && $absolute) {
-                    continue;
-                } elseif (count($parts) > 0 && end($parts) !== '..') {
-                    array_pop($parts);
-                    continue;
-                }
-            } elseif (strpos($part, ':') !== false) {
-                throw new \InvalidArgumentException('The character ":" is not allowed in paths');
+                self::ascend($part, $parts, $absolute);
+            } else {
+                $parts[] = $part;
             }
-
-            $parts[] = $part;
         }
 
         return $parts;
+    }
+
+    private static function ascend($part, & $parts, $absolute)
+    {
+        if (in_array(end($parts), ['..', false], true)) {
+            $parts[] = '..';
+        } elseif (count($parts) > 1 || !$absolute) {
+            array_pop($parts);
+        }
     }
 }
