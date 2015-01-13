@@ -61,9 +61,7 @@ class Path
     private static function normalize(array $paths, $absolute)
     {
         $parts = $absolute ? [array_shift($paths)] : [];
-        $paths = array_filter($paths, function ($value) {
-            return $value !== '' && $value !== '.';
-        });
+        $paths = array_filter($paths, [__CLASS__, 'emptyPath']);
 
         foreach ($paths as $part) {
             if (strpos($part, ':') !== false) {
@@ -76,6 +74,11 @@ class Path
         }
 
         return $parts;
+    }
+
+    private static function emptyPath($path)
+    {
+        return $path !== '' && $path !== '.';
     }
 
     private static function ascend($part, & $parts, $absolute)
