@@ -1,7 +1,7 @@
 {
     "name": "riimu/kit-pathjoin",
     "type": "library",
-    "description": "Library for joining file system paths in a normalizing and cross platform way.",
+    "description": "Library for joining file system paths in a normalizing and cross platform way",
     "homepage": "http://kit.riimu.net",
     "keywords": ["file", "system", "path", "join"],
     "license": "MIT",
