@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require '../src/autoload.php';
 
 use Riimu\Kit\PathJoin\Path;
 echo Path::join('foo', 'bar') . PHP_EOL; // Will output 'foo/bar' or 'foo\bar'

@@ -1,14 +1,18 @@
 # Path joiner and normalizer #
 
-This library provides a simple way to join file system paths together while
-completely ignoring the fact that different file systems use different
-directory separators. In addition to that, this library also resolves any
-parent and current directory references in the path (i.e. '..' and '.'), which
-creates cleaner file paths.
+PathJoin is a PHP library for joining file systems paths and resolving parent
+`..` and current `.` directory references. In order to support both Windows and
+Unix platforms, the library treats both forward `/` and backward `\` slashes as
+directory separators.
 
-This library can also be used to normalize file system paths in addition to
-joining them, as passing a single argument will simple return that path in a
-normalized form.
+This library makes it easier to join file system paths, since you can ignore the
+fact that different directory separators exist. Joining paths together is also
+easier, because you don't have to remember if paths are followed by a directory
+separator or not.
+
+In some cases this library can also provide additional security, since only the
+first path can denote an absolute path and by resolving parent directory
+references, it's easier to tell if you're about to access allowed paths.
 
 The API documentation, which can be generated using Apigen, can be read online
 at: http://kit.riimu.net/api/pathjoin/
@@ -22,7 +26,7 @@ at: http://kit.riimu.net/api/pathjoin/
 In order to use this library, the following requirements must be met:
 
   * PHP version 5.4
-  
+
 ## Installation ##
 
 This library can be installed via [Composer](http://getcomposer.org/). To do
@@ -62,6 +66,8 @@ path uses the system directory separators. For example:
 ```php
 <?php
 
+require 'vendor/autoload.php';
+
 use Riimu\Kit\PathJoin\Path;
 echo Path::join('foo', 'bar') . PHP_EOL; // Will output 'foo/bar' or 'foo\bar'
 echo Path::join('foo', '/bar/baz') . PHP_EOL; // Will output 'foo/bar/baz' or 'foo\bar\baz'
@@ -79,6 +85,8 @@ there is a slight difference in how absolute and relative paths are handled:
 ```php
 <?php
 
+require 'vendor/autoload.php';
+
 use Riimu\Kit\PathJoin\Path;
 echo Path::join('foo/bar', '../baz') . PHP_EOL; // Will output 'foo/baz'
 echo Path::join('foo/bar', '../../baz') . PHP_EOL; // Will output 'baz'
@@ -92,11 +100,13 @@ echo Path::join('/foo/bar', '../../../baz') . PHP_EOL; // Will output '/baz'
 echo Path::join('C:\foo\bar', '..\..\..\baz') . PHP_EOL; // Will output 'C:\baz'
 ```
 
-Only the first path in the path list can determine the path as an absolute path.
+Only the first path in the path list can denote the path as an absolute path.
 All following paths are relative to that path. For example:
 
 ```php
 <?php
+
+require 'vendor/autoload.php';
 
 use Riimu\Kit\PathJoin\Path;
 echo Path::join('', '/foo') . PHP_EOL; // Will output 'foo'
@@ -108,6 +118,8 @@ the method with just a single argument to normalize that path, like so:
 
 ```php
 <?php
+
+require 'vendor/autoload.php';
 
 use Riimu\Kit\PathJoin\Path;
 echo Path::join('/foo/.//bar/../baz/') . PHP_EOL; // Will output '/foo/baz'

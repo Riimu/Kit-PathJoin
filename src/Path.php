@@ -15,18 +15,21 @@ class Path
      *
      * The method can take either multiple string arguments or an array of
      * strings. The paths will be joined together using a directory separator
-     * and any backtracking, i.e. '..', will be resolved. The method assumes
-     * that both forward and backward slash are directory separators to provide
-     * best possible cross platform compatibility. Only the first path can
-     * indicate an absolute path. All following paths are always relative to
-     * the first path.
+     * and any parent and current directory references will be resolved. The
+     * resulting path may, however, begin with parent directory references if
+     * it is not an absolute path. Only the first path may denote an absolute
+     * path, however, since all following paths are relative to the first path.
      *
-     * A single string can be passed to this method in order to normalize any
-     * '..' in the path and to assure platform appropriate directory separators.
-     * Any '.' directory or an empty directory name, i.e. '', will be discarded.
+     * In order to support multiple different platforms, this method will treat
+     * all forward and backslashes as directory separators. The resulting path
+     * will only contain system directory separators, however.
      *
-     * @param string[]|string $path
+     * It is possible to simple provide a single path to this function in order
+     * to normalize that path.
+     *
+     * @param string[]|string $path Paths to join and normalize
      * @return string The joined and normalized path
+     * @throws \InvalidArgumentException If the path contains invalid characters
      */
     public static function join($path)
     {
@@ -52,20 +55,19 @@ class Path
     }
 
     /**
-     * Normalizes that parent directory references and removes unnecessary ones.
+     * Normalizes that parent directory references and removes redundant ones.
      * @param string[] $paths List of parts in the the path
      * @param boolean $absolute Whether the path is an absolute path or not
      * @return string[] Normalized list of paths
-     * @throws \InvalidArgumentException If the path contains invalid colons
      */
     private static function normalize(array $paths, $absolute)
     {
         $parts = $absolute ? [array_shift($paths)] : [];
-        $paths = array_filter($paths, [__CLASS__, 'emptyPath']);
+        $paths = array_filter($paths, [__CLASS__, 'isValidPath']);
 
         foreach ($paths as $part) {
             if ($part === '..') {
-                self::ascend($part, $parts, $absolute);
+                self::resolveParent($parts, $absolute);
             } else {
                 $parts[] = $part;
             }
@@ -74,7 +76,13 @@ class Path
         return $parts;
     }
 
-    private static function emptyPath($path)
+    /**
+     * Tells if the part of the path is valid and not empty.
+     * @param string $path Part of the path to check for redundancy
+     * @return bool True if the path is valid and not empty, false if not
+     * @throws \InvalidArgumentException If the path contains invalid characters
+     */
+    private static function isValidPath($path)
     {
         if (strpos($path, ':') !== false) {
             throw new \InvalidArgumentException('Invalid path character ":"');
@@ -83,7 +91,12 @@ class Path
         return $path !== '' && $path !== '.';
     }
 
-    private static function ascend($part, & $parts, $absolute)
+    /**
+     * Resolves the relative parent directory for the path.
+     * @param string[] $parts Path parts to modify
+     * @param boolean $absolute True if dealing with absolute path, false if not
+     */
+    private static function resolveParent(& $parts, $absolute)
     {
         if (in_array(end($parts), ['..', false], true)) {
             $parts[] = '..';
