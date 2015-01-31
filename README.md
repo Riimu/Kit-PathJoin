@@ -67,8 +67,8 @@ path uses the system directory separators. For example:
 <?php
 
 require 'vendor/autoload.php';
-
 use Riimu\Kit\PathJoin\Path;
+
 echo Path::join('foo', 'bar') . PHP_EOL; // Will output 'foo/bar' or 'foo\bar'
 echo Path::join('foo', '/bar/baz') . PHP_EOL; // Will output 'foo/bar/baz' or 'foo\bar\baz'
 
@@ -86,8 +86,8 @@ there is a slight difference in how absolute and relative paths are handled:
 <?php
 
 require 'vendor/autoload.php';
-
 use Riimu\Kit\PathJoin\Path;
+
 echo Path::join('foo/bar', '../baz') . PHP_EOL; // Will output 'foo/baz'
 echo Path::join('foo/bar', '../../baz') . PHP_EOL; // Will output 'baz'
 echo Path::join('foo/bar', '../../../baz') . PHP_EOL; // Will output '../baz'
@@ -107,8 +107,8 @@ All following paths are relative to that path. For example:
 <?php
 
 require 'vendor/autoload.php';
-
 use Riimu\Kit\PathJoin\Path;
+
 echo Path::join('', '/foo') . PHP_EOL; // Will output 'foo'
 echo Path::join('/', '/foo') . PHP_EOL; // Will output '/foo'
 ```
@@ -120,8 +120,8 @@ the method with just a single argument to normalize that path, like so:
 <?php
 
 require 'vendor/autoload.php';
-
 use Riimu\Kit\PathJoin\Path;
+
 echo Path::join('/foo/.//bar/../baz/') . PHP_EOL; // Will output '/foo/baz'
 ```
 
