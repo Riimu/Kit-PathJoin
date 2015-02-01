@@ -5,7 +5,7 @@ destination: api
 charset:
 	- UTF-8
 
-main: Riimu\Kit\CSRF
-title: CSRF
+main: Riimu\Kit\PathJoin
+title: PathJoin
 php: false
 tree: true
