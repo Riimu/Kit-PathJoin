@@ -1,6 +1,6 @@
 # Path joiner and normalizer #
 
-PathJoin is a PHP library for joining file systems paths and resolving parent
+*PathJoin* is a PHP library for joining file systems paths and resolving parent
 `..` and current `.` directory references. In order to support both Windows and
 Unix platforms, the library treats both forward `/` and backward `\` slashes as
 directory separators.
