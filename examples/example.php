@@ -1,29 +1,34 @@
 <?php
 
-require __DIR__ . '/../src/autoload.php';
-
+require '../src/autoload.php';
 use Riimu\Kit\PathJoin\Path;
-echo Path::join('foo', 'bar') . PHP_EOL; // Will output 'foo/bar' or 'foo\bar'
-echo Path::join('foo', '/bar/baz') . PHP_EOL; // Will output 'foo/bar/baz' or 'foo\bar\baz'
 
-// Passing an array works fine too
-echo Path::join(['foo', 'bar']) . PHP_EOL; // Will output 'foo/bar' or 'foo\bar'
+// Both of the following will output 'foo/bar' on Unix and 'foo\bar' on Windows
+echo Path::normalize('foo/bar') . PHP_EOL;
+echo Path::join('foo', 'bar') . PHP_EOL;
 
-// You can mix and match the directory separators, irregardless of the system
-echo Path::join(['/foo', '\bar\baz']) . PHP_EOL;  // Will output '/foo/bar/baz' or '\foo\bar\baz'
+// The join method accepts multiple arguments or a single array
+echo Path::join('foo', 'bar', 'baz') . PHP_EOL;   // outputs 'foo/bar/baz'
+echo Path::join(['foo', 'bar', 'baz']) . PHP_EOL; // outputs 'foo/bar/baz'
 
-echo Path::join('foo/bar', '../baz') . PHP_EOL; // Will output 'foo/baz'
-echo Path::join('foo/bar', '../../baz') . PHP_EOL; // Will output 'baz'
-echo Path::join('foo/bar', '../../../baz') . PHP_EOL; // Will output '../baz'
+// The '.' and '..' directory references will be resolved in the paths
+echo Path::normalize('foo/./bar/../baz') . PHP_EOL;     // outputs 'foo/baz'
+echo Path::join(['foo/./', 'bar', '../baz']) . PHP_EOL; // outputs 'foo/baz'
 
-echo Path::join('/foo/bar', '../baz') . PHP_EOL; // Will output '/foo/baz'
-echo Path::join('/foo/bar', '../../baz') . PHP_EOL; // Will output '/baz'
-echo Path::join('/foo/bar', '../../../baz') . PHP_EOL; // Will output '/baz'
+// Only the first path can denote an absolute path in the join method
+echo Path::join('/foo', '/bar/baz') . PHP_EOL;     // outputs '/foo/bar/baz'
+echo Path::join('foo', '/bar') . PHP_EOL;          // outputs 'foo/bar'
+echo Path::join('foo', '../bar', 'baz') . PHP_EOL; // outputs 'bar/baz'
+echo Path::join('', '/bar', 'baz') . PHP_EOL;      // outputs 'bar/baz'
 
-// Windows drive names are understood as absolute paths:
-echo Path::join('C:\foo\bar', '..\..\..\baz') . PHP_EOL; // Will output 'C:\baz'
+// Relative paths can start with a '..', but absolute paths cannot
+echo Path::join('/foo', '../../bar', 'baz') . PHP_EOL; // outputs '/bar/baz'
+echo Path::join('foo', '../../bar', 'baz') . PHP_EOL;  // outputs '../bar/baz'
 
-echo Path::join('', '/foo') . PHP_EOL; // Will output 'foo'
-echo Path::join('/', '/foo') . PHP_EOL; // Will output '/foo'
+// Empty path will result in a '.'
+echo Path::normalize('foo/..') . PHP_EOL;
+echo Path::join('foo', 'bar', '../..') . PHP_EOL;
 
-echo Path::join('/foo/.//bar/../baz/') . PHP_EOL; // Will output '/foo/baz'
+echo Path::normalize('/foo/bar') . PHP_EOL;        // outputs 'C:\foo\Bar'
+echo Path::normalize('D:/foo/bar') . PHP_EOL;      // outputs 'D:\foo\Bar'
+echo Path::normalize('/foo/bar', false) . PHP_EOL; // outputs '\foo\Bar'
