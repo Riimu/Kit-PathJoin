@@ -71,7 +71,7 @@ The following example will contain numerous different use cases of the library:
 ```php
 <?php
 
-require 'src/autoload.php';
+require 'vendor/autoload.php';
 use Riimu\Kit\PathJoin\Path;
 
 // Both of the following will output 'foo/bar' on Unix and 'foo\bar' on Windows
@@ -113,7 +113,7 @@ located on the C: drive:
 ```php
 <?php
 
-require 'src/autoload.php';
+require 'vendor/autoload.php';
 use Riimu\Kit\PathJoin\Path;
 
 echo Path::normalize('/foo/bar') . PHP_EOL;        // outputs 'C:\foo\Bar'
