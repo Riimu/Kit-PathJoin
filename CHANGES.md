@@ -1,5 +1,9 @@
 # Changelog #
 
+## v1.1.1 (2015-08-09) ##
+
+  * Maintenance release that simply addresses some coding standards issues
+
 ## v1.1.0 (2015-03-25) ##
 
   * Added `Path::normalize()` method for normalizing a single path.
