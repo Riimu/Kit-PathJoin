@@ -118,13 +118,14 @@ class Path
         }
 
         $length = strcspn($path, '/\\');
+
         return $length === 0 || $path[$length - 1] === ':';
     }
 
     /**
-     * Resolves parent directory references and removes redundant entries
+     * Resolves parent directory references and removes redundant entries.
      * @param string[] $parts List of parts in the the path
-     * @param boolean $absolute Whether the path is an absolute path or not
+     * @param bool $absolute Whether the path is an absolute path or not
      * @return string[] Resolved list of parts in the path
      */
     private static function resolve(array $parts, $absolute)
@@ -160,7 +161,7 @@ class Path
     /**
      * Resolves the relative parent directory for the path.
      * @param string[] $parts Path parts to modify
-     * @param boolean $absolute True if dealing with absolute path, false if not
+     * @param bool $absolute True if dealing with absolute path, false if not
      * @return string|null The removed parent or null if nothing was removed
      */
     private static function resolveParent(& $parts, $absolute)
