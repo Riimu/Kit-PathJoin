@@ -19,7 +19,7 @@ The API documentation, which can be generated using Apigen, can be read online
 at: http://kit.riimu.net/api/pathjoin/
 
 [![Build Status](https://img.shields.io/travis/Riimu/Kit-PathJoin.svg?style=flat)](https://travis-ci.org/Riimu/Kit-PathJoin)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/Riimu/Kit-PathJoin.svg?style=flat)](https://scrutinizer-ci.com/g/Riimu/Kit-PathJoin/)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/Riimu/Kit-PathJoin.svg?style=flat)](https://scrutinizer-ci.com/g/Riimu/Kit-PathJoin/)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/Riimu/Kit-PathJoin.svg?style=flat)](https://scrutinizer-ci.com/g/Riimu/Kit-PathJoin/)
 
 ## Requirements ##
