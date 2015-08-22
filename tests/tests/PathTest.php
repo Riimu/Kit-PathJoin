@@ -93,6 +93,11 @@ class PathTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('.', Path::normalize(''));
     }
 
+    public function testZeroAsEmptyPath()
+    {
+        $this->assertSame('0', Path::normalize('0'));
+    }
+
     private function assertPath(array $expected, $actual)
     {
         $this->assertSame(implode(DIRECTORY_SEPARATOR, $expected), $actual);
