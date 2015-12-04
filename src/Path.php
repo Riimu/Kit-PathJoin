@@ -61,10 +61,14 @@ class Path
      */
     public static function join($paths)
     {
-        $paths = array_map('strval', is_array($paths) ? $paths : func_get_args());
-        $parts = self::getParts($paths);
+        $joins = [];
 
-        $absolute = self::isAbsolute($paths[0]);
+        foreach (is_array($paths) ? $paths : func_get_args() as $path) {
+            $joins[] = (string) $path;
+        }
+
+        $parts = self::getParts($joins);
+        $absolute = self::isAbsolute($joins[0]);
         $root = $absolute ? array_shift($parts) . DIRECTORY_SEPARATOR : '';
         $parts = self::resolve($parts, $absolute);
 
