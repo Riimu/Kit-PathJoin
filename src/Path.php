@@ -167,7 +167,7 @@ class Path
      */
     private static function resolveParent(& $parts, $absolute)
     {
-        if ($absolute || !in_array($parts[count($parts) - 1], ['..', false], true)) {
+        if ($absolute || ($parts && $parts[count($parts) - 1] !== '..')) {
             array_pop($parts);
             return;
         }
