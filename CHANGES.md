@@ -1,5 +1,9 @@
 # Changelog #
 
+## v1.2.0 (2017-07-09) ##
+
+  * Increased minimum required PHP version to 5.6
+
 ## v1.1.2 (2015-08-22) ##
 
   * Slightly reworked how the paths are built
