@@ -61,13 +61,7 @@ class Path
      */
     public static function join($paths)
     {
-        $arguments = is_array($paths) ? $paths : func_get_args();
-        $joins = [];
-
-        foreach ($arguments as $path) {
-            $joins[] = (string) $path;
-        }
-
+        $joins = array_map('strval', is_array($paths) ? $paths : func_get_args());
         $parts = self::getParts($joins);
         $absolute = self::isAbsolute($joins[0]);
         $root = $absolute ? array_shift($parts) . DIRECTORY_SEPARATOR : '';
@@ -165,9 +159,11 @@ class Path
      * @param string[] $parts Path parts to modify
      * @param bool $absolute True if dealing with absolute path, false if not
      */
-    private static function resolveParent(& $parts, $absolute)
+    private static function resolveParent(array & $parts, $absolute)
     {
-        if ($absolute || ($parts && $parts[count($parts) - 1] !== '..')) {
+        $count = count($parts);
+
+        if ($absolute || ($count > 0 && $parts[$count - 1] !== '..')) {
             array_pop($parts);
             return;
         }
