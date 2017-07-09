@@ -38,7 +38,7 @@ class Path
     {
         $path = self::join((string) $path);
 
-        if ($path[0] === DIRECTORY_SEPARATOR && $prependDrive) {
+        if ($prependDrive && $path[0] === DIRECTORY_SEPARATOR) {
             return strstr(getcwd(), DIRECTORY_SEPARATOR, true) . $path;
         }
 
@@ -94,6 +94,7 @@ class Path
      * Merges the paths and returns the individual parts.
      * @param string[] $paths Array of paths
      * @return string[] Parts in the paths merged into a single array
+     * @throws \InvalidArgumentException If no paths have been provided
      */
     private static function getParts(array $paths)
     {
@@ -171,5 +172,6 @@ class Path
         }
 
         $parts[] = '..';
+        return null;
     }
 }

@@ -3,6 +3,9 @@
 ## v1.2.0 (2017-07-09) ##
 
   * Increased minimum required PHP version to 5.6
+  * Updated tests to work with PHPUnit 6
+  * Updated travis build
+  * Slightly improved the bundled autoloader
 
 ## v1.1.2 (2015-08-22) ##
 
