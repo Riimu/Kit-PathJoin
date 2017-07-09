@@ -2,16 +2,18 @@
 
 namespace Riimu\Kit\PathJoin;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @author Riikka Kalliomäki <riikka.kalliomaki@gmail.com>
- * @copyright Copyright (c) 2014, Riikka Kalliomäki
+ * @copyright Copyright (c) 2014-2017 Riikka Kalliomäki
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
-class PathTest extends \PHPUnit_Framework_TestCase
+class PathTest extends TestCase
 {
     public function testEmptyPathArray()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         Path::join([]);
     }
 
@@ -51,7 +53,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidColon()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         Path::join('foo', 'C:\bar');
     }
 

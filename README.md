@@ -15,18 +15,18 @@ case since it works by using the file system. This library simply combines and
 normalizes the paths using string handling. There is no requirement for the
 files or directories to be readable or even exist.
 
-The API documentation, which can be generated using Apigen, can be read online
-at: http://kit.riimu.net/api/pathjoin/
+The API documentation is available at: http://kit.riimu.net/api/pathjoin/
 
-[![Build Status](https://img.shields.io/travis/Riimu/Kit-PathJoin.svg?style=flat)](https://travis-ci.org/Riimu/Kit-PathJoin)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/Riimu/Kit-PathJoin.svg?style=flat)](https://scrutinizer-ci.com/g/Riimu/Kit-PathJoin/)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/Riimu/Kit-PathJoin.svg?style=flat)](https://scrutinizer-ci.com/g/Riimu/Kit-PathJoin/)
+[![Travis](https://img.shields.io/travis/Riimu/Kit-PathJoin.svg?style=flat-square)](https://travis-ci.org/Riimu/Kit-PathJoin)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/Riimu/Kit-PathJoin.svg?style=flat-square)](https://scrutinizer-ci.com/g/Riimu/Kit-PathJoin/)
+[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/Riimu/Kit-PathJoin.svg?style=flat-square)](https://scrutinizer-ci.com/g/Riimu/Kit-PathJoin/)
+[![Packagist](https://img.shields.io/packagist/v/riimu/kit-pathjoin.svg?style=flat-square)](https://packagist.org/packages/riimu/kit-pathjoin)
 
 ## Requirements ##
 
 In order to use this library, the following requirements must be met:
 
-  * PHP version 5.4
+  * PHP version 5.6
 
 ## Installation ##
 
@@ -131,6 +131,6 @@ echo Path::normalize('/foo/bar', false) . PHP_EOL; // outputs '\foo\Bar'
 
 ## Credits ##
 
-This library is copyright 2014 - 2015 to Riikka Kalliomäki.
+This library is Copyright (c) 2014-2017 Riikka Kalliomäki.
 
 See LICENSE for license and copying information.

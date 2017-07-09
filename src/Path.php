@@ -5,7 +5,7 @@ namespace Riimu\Kit\PathJoin;
 /**
  * Cross-platform library for normalizing and joining file system paths.
  * @author Riikka Kalliomäki <riikka.kalliomaki@gmail.com>
- * @copyright Copyright (c) 2014, Riikka Kalliomäki
+ * @copyright Copyright (c) 2014-2017 Riikka Kalliomäki
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
 class Path
@@ -38,7 +38,7 @@ class Path
     {
         $path = self::join((string) $path);
 
-        if ($path[0] === DIRECTORY_SEPARATOR && $prependDrive) {
+        if ($prependDrive && $path[0] === DIRECTORY_SEPARATOR) {
             return strstr(getcwd(), DIRECTORY_SEPARATOR, true) . $path;
         }
 
@@ -61,10 +61,9 @@ class Path
      */
     public static function join($paths)
     {
-        $paths = array_map('strval', is_array($paths) ? $paths : func_get_args());
-        $parts = self::getParts($paths);
-
-        $absolute = self::isAbsolute($paths[0]);
+        $joins = array_map('strval', is_array($paths) ? $paths : func_get_args());
+        $parts = self::getParts($joins);
+        $absolute = self::isAbsolute($joins[0]);
         $root = $absolute ? array_shift($parts) . DIRECTORY_SEPARATOR : '';
         $parts = self::resolve($parts, $absolute);
 
@@ -90,6 +89,7 @@ class Path
      * Merges the paths and returns the individual parts.
      * @param string[] $paths Array of paths
      * @return string[] Parts in the paths merged into a single array
+     * @throws \InvalidArgumentException If no paths have been provided
      */
     private static function getParts(array $paths)
     {
@@ -97,7 +97,7 @@ class Path
             throw new \InvalidArgumentException('You must provide at least one path');
         }
 
-        return array_map('trim', explode('/', str_replace('\\', '/', implode('/', $paths))));
+        return preg_split('# *[/\\\\]+ *#', trim(implode('/', $paths), ' '));
     }
 
     /**
@@ -158,12 +158,14 @@ class Path
      * Resolves the relative parent directory for the path.
      * @param string[] $parts Path parts to modify
      * @param bool $absolute True if dealing with absolute path, false if not
-     * @return string|null The removed parent or null if nothing was removed
      */
-    private static function resolveParent(& $parts, $absolute)
+    private static function resolveParent(array & $parts, $absolute)
     {
-        if ($absolute || !in_array(end($parts), ['..', false], true)) {
-            return array_pop($parts);
+        $count = count($parts);
+
+        if ($absolute || ($count > 0 && $parts[$count - 1] !== '..')) {
+            array_pop($parts);
+            return;
         }
 
         $parts[] = '..';
