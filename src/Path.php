@@ -61,9 +61,10 @@ class Path
      */
     public static function join($paths)
     {
+        $arguments = is_array($paths) ? $paths : func_get_args();
         $joins = [];
 
-        foreach (is_array($paths) ? $paths : func_get_args() as $path) {
+        foreach ($arguments as $path) {
             $joins[] = (string) $path;
         }
 
@@ -163,15 +164,14 @@ class Path
      * Resolves the relative parent directory for the path.
      * @param string[] $parts Path parts to modify
      * @param bool $absolute True if dealing with absolute path, false if not
-     * @return string|null The removed parent or null if nothing was removed
      */
     private static function resolveParent(& $parts, $absolute)
     {
-        if ($absolute || !in_array(end($parts), ['..', false], true)) {
-            return array_pop($parts);
+        if ($absolute || !in_array($parts[count($parts) - 1], ['..', false], true)) {
+            array_pop($parts);
+            return;
         }
 
         $parts[] = '..';
-        return null;
     }
 }
