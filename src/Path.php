@@ -102,7 +102,7 @@ class Path
             throw new \InvalidArgumentException('You must provide at least one path');
         }
 
-        return array_map('trim', explode('/', str_replace('\\', '/', implode('/', $paths))));
+        return preg_split('# *[/\\\\]+ *#', trim(implode('/', $paths), ' '));
     }
 
     /**

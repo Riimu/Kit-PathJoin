@@ -2,6 +2,7 @@
 
 ## v1.2.0 (2017-07-09) ##
 
+  * Minor changes to path joining logic
   * Increased minimum required PHP version to 5.6
   * Updated tests to work with PHPUnit 6
   * Updated travis build
