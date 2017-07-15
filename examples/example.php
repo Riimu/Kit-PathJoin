@@ -1,6 +1,6 @@
 <?php
 
-require '../src/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 use Riimu\Kit\PathJoin\Path;
 
 // Both of the following will output 'foo/bar' on Unix and 'foo\bar' on Windows
